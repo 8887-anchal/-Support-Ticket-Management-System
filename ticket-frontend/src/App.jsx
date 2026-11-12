@@ -5,12 +5,22 @@ import {
   SlidersHorizontal, Sparkles, TicketCheck, UserRound, X,
 } from 'lucide-react'
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:8080/api'
+const API = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8081/api' : '')
 const STATUSES = ['OPEN', 'IN_PROGRESS', 'WAITING', 'RESOLVED', 'CLOSED']
 const PRIORITIES = ['LOW', 'MEDIUM', 'HIGH', 'URGENT']
 const CATEGORIES = ['Account access', 'Billing', 'Technical issue', 'Product question', 'Other']
 
 async function request(path, token, options = {}) {
+  if (!API) {
+    throw new Error('The API URL is not configured. Set VITE_API_URL in Vercel to your public HTTPS backend URL ending in /api.')
+  }
+  const apiUrl = new URL(API)
+  if (!import.meta.env.DEV && ['localhost', '127.0.0.1', '::1'].includes(apiUrl.hostname)) {
+    throw new Error('Vercel cannot reach localhost. Set VITE_API_URL to your public HTTPS backend URL ending in /api.')
+  }
+  if (!import.meta.env.DEV && apiUrl.protocol !== 'https:') {
+    throw new Error('The deployed API URL must use HTTPS.')
+  }
   const response = await fetch(`${API}${path}`, {
     ...options,
     headers: {

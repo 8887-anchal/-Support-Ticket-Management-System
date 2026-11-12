@@ -65,7 +65,7 @@ The API listens on port `8081` by default. Runtime settings are environment-driv
 | `DATABASE_PASSWORD` | `ticket_local_password` | MySQL password |
 | `JWT_SECRET` | required; no default | HMAC signing secret; generate a unique value for each environment and keep it out of Git |
 | `JWT_EXPIRATION_MS` | `86400000` | Token lifetime |
-| `CORS_ALLOWED_ORIGINS` | `http://localhost:4000` | Comma-separated exact browser origins |
+| `CORS_ALLOWED_ORIGINS` | `http://localhost:4000,https://support-ticket-management-system-drab.vercel.app` | Comma-separated exact browser origins |
 | `BOOTSTRAP_AGENT_EMAIL` | empty | Optional first agent email |
 | `BOOTSTRAP_AGENT_PASSWORD` | empty | Optional first agent password (minimum 8 characters) |
 | `BOOTSTRAP_AGENT_NAME` | empty | Optional first agent display name |
@@ -120,9 +120,9 @@ The frontend is Vercel-ready. Create a Vercel project connected to this reposito
 - Framework preset: Vite
 - Build command: `npm run build`
 - Output directory: `dist`
-- Environment variable: `VITE_API_URL=https://<your-backend-host>/api`
+- Environment variable: `VITE_API_URL=https://<your-public-backend-host>/api`
 
-The included `vercel.json` sends browser routes to the Vite entry point. The backend must be publicly reachable over HTTPS for the hosted frontend to work. Add the resulting Vercel origin to the backend's `CORS_ALLOWED_ORIGINS` setting and redeploy the backend.
+The deployed Vercel origin is `https://support-ticket-management-system-drab.vercel.app`. Set the backend's `CORS_ALLOWED_ORIGINS` to that exact origin (plus any local/preview origins needed), and redeploy the backend. The backend must be publicly reachable over HTTPS; a local `localhost` URL cannot be used by Vercel visitors. After setting or changing Vercel environment variables, redeploy the frontend. The included `vercel.json` sends browser routes to the Vite entry point.
 
 For GitHub publishing steps and the checked-in CI workflow, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -130,6 +130,6 @@ For GitHub publishing steps and the checked-in CI workflow, see [CONTRIBUTING.md
 
 GitHub repository: https://github.com/8887-anchal/-Support-Ticket-Management-System
 
-Vercel frontend URL: pending deployment. No Vercel deployment is configured in this workspace yet.
+Vercel frontend URL: https://support-ticket-management-system-drab.vercel.app
 
-Backend/API URL: not publicly deployed; follow the local setup instructions above.
+Backend/API URL: not publicly deployed yet. The Vercel frontend needs a public HTTPS backend configured as `VITE_API_URL` before registration/login can work from the hosted site.

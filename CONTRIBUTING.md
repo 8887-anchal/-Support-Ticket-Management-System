@@ -47,7 +47,7 @@ Both checks also run in GitHub Actions for pushes and pull requests targeting `m
 1. Import the GitHub repository in Vercel.
 2. Set the project root directory to `ticket-frontend`.
 3. Set the build command to `npm run build` and output directory to `dist`.
-4. Configure `VITE_API_URL` as `https://YOUR_PUBLIC_API_HOST/api`.
-5. Add the exact Vercel site origin to the backend `CORS_ALLOWED_ORIGINS` setting and redeploy the backend.
+4. Configure `VITE_API_URL` as `https://YOUR_PUBLIC_API_HOST/api` (not `localhost`).
+5. Add `https://support-ticket-management-system-drab.vercel.app` to the backend `CORS_ALLOWED_ORIGINS` setting and redeploy the backend.
 
 A Vercel-hosted frontend cannot call an API running only on your own `localhost`; use a publicly reachable HTTPS backend and database for a shared deployment. Add the generated GitHub and Vercel URLs to the README submission section after publishing.
